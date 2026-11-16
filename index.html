@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Einfache Botschaften, einfache Sprache? – Sprachkomplexität im Bundestag</title>
+  <meta name="description" content="47.144 Bundestagsreden, mit einem Sprachmodell vermessen: Spricht die AfD-Fraktion einfacher als andere? Ergebnisse und alle Reden zum Erkunden.">
+  <meta name="theme-color" content="#f7f5ee">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#overview" aria-label="Zum Überblick" data-i18n-aria="nav.home">
+    <img class="logo" src="assets/logo.svg" width="32" height="32" alt="">
+    <span class="brand-t"><span data-i18n="brand.a">Einfache Botschaften,</span> <em data-i18n="brand.b">einfache Sprache?</em></span>
+  </a>
+  <nav id="nav" aria-label="Analysen" data-i18n-aria="nav.aria"></nav>
+  <div class="lang" role="group" aria-label="Sprache / Language">
+    <button type="button" data-lang="de" lang="de" title="Deutsch">DE</button>
+    <button type="button" data-lang="en" lang="en" title="English">EN</button>
+  </div>
+</header>
+
+<div class="filterbar" id="filterbar" hidden>
+  <div class="fin">
+    <button type="button" id="ftoggle" class="ftoggle" aria-expanded="false"><b data-i18n="f.filter">Filter</b><span id="fsum" class="fsum"></span><span class="caret" aria-hidden="true">▾</span></button>
+    <div class="fbody">
+      <div class="fgroup">
+        <span class="flabel" data-i18n="f.party">Fraktion</span>
+        <div id="chips" class="chips"></div>
+        <button type="button" id="allP" class="link" data-i18n="f.all">alle</button>
+        <button type="button" id="onlyAfd" class="link" data-i18n="f.onlyAfd">nur AfD</button>
+      </div>
+      <div class="fgroup">
+        <span class="flabel" data-i18n="f.years">Jahre</span>
+        <select id="y0" aria-label="Von Jahr" data-i18n-aria="f.from"></select>
+        <span data-i18n="f.to">bis</span>
+        <select id="y1" aria-label="Bis Jahr" data-i18n-aria="f.until"></select>
+      </div>
+      <label class="switch"><input type="checkbox" id="hlAfd"><span data-i18n="f.hl">AfD hervorheben</span></label>
+      <button type="button" id="reset" class="link" data-i18n="f.reset">zurücksetzen</button>
+    </div>
+  </div>
+</div>
+
+<div id="demoBanner" class="demo" data-i18n="demo" hidden></div>
+
+<main>
+  <!-- ======================= Startseite ======================= -->
+  <section class="view" id="view-overview" data-view="overview">
+    <div class="hero">
+      <div class="hero-l">
+        <h1><span data-i18n="brand.a">Einfache Botschaften,</span> <em data-i18n="brand.b">einfache Sprache?</em></h1>
+        <p class="hero-sub" data-i18n="hero.sub">Die Sprachkomplexität der AfD-Bundestagsfraktion (2017–2025)</p>
+        <p class="hero-p" data-i18n="hero.summary">Rechtspopulistische Parteien setzen auf einfache Botschaften. Spricht die AfD im Bundestag deshalb auch einfacher? Wir haben das mit einem Sprachmodell gemessen. Das Ergebnis: Die AfD-Fraktion spricht nicht einfacher als andere Fraktionen, sondern etwas unvorhersehbarer – auch nach Kontrolle für Alter, Bildung, Geschlecht und Regierungsrolle. Der Unterschied ist allerdings klein.</p>
+        <div class="btnrow">
+          <a class="btn primary" href="#party"><span data-i18n="hero.explore">Daten erkunden</span><span aria-hidden="true">→</span></a>
+          <a class="btn bloglink" href="#"><span data-i18n="hero.blog">Zum Blogbeitrag</span><span aria-hidden="true">↗</span></a>
+        </div>
+        <dl class="facts">
+          <div><dt data-i18n="facts.speeches">Reden</dt><dd id="f-n">–</dd></div>
+          <div><dt data-i18n="facts.speakers">Redner:innen</dt><dd id="f-spk">–</dd></div>
+          <div><dt data-i18n="facts.span">Zeitraum</dt><dd class="txt" data-i18n="facts.spanV">19. und 20. Wahlperiode <small>(2017–2025)</small></dd></div>
+        </dl>
+        <p class="facts-note" data-i18n="facts.note">Nicht berücksichtigt: Reden der Bundestagspräsident:innen und Vizepräsident:innen sowie sehr kurze Beiträge.</p>
+      </div>
+
+      <aside class="sur" aria-labelledby="sur-t">
+        <div class="sur-k" id="sur-t" data-i18n="sur.title">Was ist Surprisal?</div>
+        <p class="sur-ex" data-i18n="sur.ex">„Sehr geehrte Damen und …“</p>
+        <div class="sur-scale">
+          <div class="sur-ends"><b data-i18n="sur.exLow">Herren</b><b class="hi" data-i18n="sur.exHigh">Dinosaurier</b></div>
+          <div class="sur-arrow" aria-hidden="true"></div>
+          <div class="sur-ends sub">
+            <span><strong data-i18n="sur.low">niedrige Surprisal</strong><br><span data-i18n="sur.lowSub">erwartbar, einfach</span></span>
+            <span><strong data-i18n="sur.high">hohe Surprisal</strong><br><span data-i18n="sur.highSub">überraschend, schwierig</span></span>
+          </div>
+        </div>
+        <ul class="sur-list">
+          <li data-i18n="sur.b1">Ein Sprachmodell (Llama-3.2-3B) liest jede Rede Wort für Wort und schätzt, welches Wort als Nächstes kommt.</li>
+          <li data-i18n="sur.b2">Je schwerer ein Wort vorherzusagen ist, desto höher seine Surprisal.</li>
+          <li data-i18n="sur.b3">Der Durchschnitt über alle Wörter ergibt den Wert der Rede.</li>
+        </ul>
+      </aside>
+    </div>
+
+    <section class="results" aria-labelledby="res-t">
+      <div class="res-head">
+        <h2 id="res-t" data-i18n="res.title">Die wichtigsten Ergebnisse</h2>
+        <p><span data-i18n="res.note">Vorhergesagte Surprisal-Werte aus dem Regressionsmodell – also für sonst vergleichbare Rednerinnen und Redner.</span> <a class="bloglink" href="#"><span data-i18n="res.blog">Alle Details im Blogbeitrag</span> ↗</a></p>
+      </div>
+      <div id="results" class="res-grid"></div>
+    </section>
+
+    <section class="teambox" aria-labelledby="team-t">
+      <div>
+        <h2 id="team-t" data-i18n="team.title">Die Autoren</h2>
+        <p data-i18n="team.text">Fragen oder Anmerkungen? Schreib uns gern auf LinkedIn.</p>
+      </div>
+      <div id="team" class="team"></div>
+    </section>
+  </section>
+
+  <!-- ============ Analysen (werden von js/app.js aufgebaut) ============ -->
+  <div id="sections"></div>
+
+  <!-- ========================= Top 5 ========================= -->
+  <section class="view" id="view-top" data-view="top" hidden>
+    <header class="vhead">
+      <div>
+        <h2 data-i18n="top.title">Top 5: die einfachsten und die schwierigsten Reden</h2>
+        <p class="lede" data-i18n="top.lede">Die niedrigsten und die höchsten Surprisal-Werte im gewählten Filter.</p>
+      </div>
+      <p class="vstats" aria-live="polite"></p>
+    </header>
+    <div class="tools">
+      <div class="seg" id="topUnit" role="group" aria-label="Einheit" data-i18n-aria="unit.aria">
+        <button type="button" data-unit="person" class="on" data-i18n="unit.person">Personen (Ø)</button>
+        <button type="button" data-unit="speech" data-i18n="unit.speech">Reden</button>
+      </div>
+      <label class="minlen" id="topMinWrap"><span data-i18n="top.min">Redelänge</span> <select id="topMin"></select></label>
+      <span class="muted" id="topNote"></span>
+    </div>
+    <div class="topgrid">
+      <div class="card toplist lo"><h3><span data-i18n="top.low">Die 5 einfachsten</span> <small data-i18n="top.lowSub">niedrigste Surprisal</small></h3><ol id="topLow"></ol></div>
+      <div class="card toplist hi"><h3><span data-i18n="top.high">Die 5 schwierigsten</span> <small data-i18n="top.highSub">höchste Surprisal</small></h3><ol id="topHigh"></ol></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <span><span data-i18n="foot.by">Eine Analyse von Nick Schlitter &amp; Noah Schulz.</span> <a class="bloglink" href="#"><span data-i18n="foot.blog">Blogbeitrag</span> ↗</a></span>
+    <span class="muted" data-i18n="foot.data">Daten: Plenarreden des Deutschen Bundestags, 19. und 20. Wahlperiode | Sprachmodell: Llama-3.2-3B</span>
+  </div>
+</footer>
+
+<noscript><p class="error">Diese Seite benötigt JavaScript. / This page requires JavaScript.</p></noscript>
+
+<script src="js/vendor/d3.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Rohdaten mit vollständigen Redetexten (zu groß für GitHub, nicht für die Webseite nötig)
+R/data/
+
+# R / macOS
+.Rhistory
+.RData
+.Rproj.user/
+.DS_Store
+
+# Blog-PDFs: nicht verlinkt, sollen nicht öffentlich werden
+assets/blog/

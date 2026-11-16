@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Logo: Sprechblase mit Verteilungskurve">
+  <path fill="#5f6b2d" d="M9 2.5h14a7 7 0 0 1 7 7v8a7 7 0 0 1-7 7h-8.3l-6 5c-.7.6-1.7 0-1.5-.9l.9-4.2A7 7 0 0 1 2 17.5v-8a7 7 0 0 1 7-7z"/>
+  <path fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" d="M7.5 19c3.2 0 3.6-10.5 8.5-10.5S21.3 19 24.5 19"/>
+  <circle cx="20.9" cy="13.7" r="2.9" fill="#f4ecd0" stroke="#5f6b2d" stroke-width="1.3"/>
+</svg>
